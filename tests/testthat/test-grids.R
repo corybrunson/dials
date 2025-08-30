@@ -1,4 +1,3 @@
-
 test_that("regular grid", {
   expect_snapshot(
     error = TRUE,
@@ -7,6 +6,10 @@ test_that("regular grid", {
   expect_equal(
     nrow(grid_regular(mixture(), trees(), levels = 2)),
     4
+  )
+  expect_equal(
+    nrow(grid_regular(mixture(), trees(), levels = 2, filter = trees == 1)),
+    2
   )
   expect_equal(
     nrow(grid_regular(mixture(), trees(), levels = 2:3)),
@@ -56,6 +59,10 @@ test_that("random grid", {
     nrow(grid_random(prod_degree(), prune_method(), size = 50)),
     12
   )
+  expect_equal(
+    nrow(grid_random(list(mixture(), trees()), size = 2)),
+    2
+  )
 })
 
 
@@ -64,10 +71,14 @@ test_that("wrong argument name", {
   p <- parameters(penalty(), mixture())
   set.seed(1)
 
-  expect_snapshot(grid_space_filling(p, levels = 5, type = "latin_hypercube"))
-  expect_snapshot(grid_space_filling(p, levels = 5, type = "max_entropy"))
-  expect_snapshot(grid_random(p, levels = 5))
-  expect_snapshot(grid_regular(p, size = 5))
+  expect_snapshot(error = TRUE, {
+    grid_space_filling(p, levels = 5, type = "latin_hypercube")
+  })
+  expect_snapshot(error = TRUE, {
+    grid_space_filling(p, levels = 5, type = "max_entropy")
+  })
+  expect_snapshot(error = TRUE, grid_random(p, levels = 5))
+  expect_snapshot(error = TRUE, grid_regular(p, size = 5))
 })
 
 test_that("filter arg yields same results", {
@@ -92,4 +103,10 @@ test_that("new param grid from conventional data frame", {
 
   expect_no_condition(y <- dials:::new_param_grid(x))
   expect_true(tibble::is_tibble(y))
+
+  # or from a matrix?
+  expect_snapshot(
+    error = TRUE,
+    new_param_grid(as.matrix(x))
+  )
 })

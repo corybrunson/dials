@@ -10,7 +10,7 @@ range_validate(object, range, ukn_ok = TRUE, ..., call = caller_env())
 
 range_get(object, original = TRUE)
 
-range_set(object, range)
+range_set(object, range, call = caller_env())
 }
 \arguments{
 \item{object}{An object with class \code{quant_param}.}
@@ -43,19 +43,19 @@ Setters, getters, and validators for parameter ranges.
 \examples{
 library(dplyr)
 
-my_lambda <- penalty() \%>\%
+my_lambda <- penalty() |>
   value_set(-4:-1)
 
 try(
   range_validate(my_lambda, c(-10, NA)),
   silent = TRUE
-) \%>\%
+) |>
   print()
 
 range_get(my_lambda)
 
-my_lambda \%>\%
-  range_set(c(-10, 2)) \%>\%
+my_lambda |>
+  range_set(c(-10, 2)) |>
   range_get()
 
 }

@@ -105,6 +105,24 @@
       Error:
       ! `finalize` must be a function or `NULL`, not the string "not a function or NULL".
 
+# integer parameter: compatibility of `inclusive` and `range` (#373)
+
+    Code
+      new_quant_param(type = "integer", range = c(0, 1), inclusive = c(FALSE, FALSE),
+      trans = NULL, label = c(param_non_incl = "some label"), finalize = NULL)
+    Condition
+      Error:
+      ! `inclusive` must be `c(TRUE, TRUE)` when the `range` only covers two consecutive values.
+
+---
+
+    Code
+      new_quant_param(type = "integer", range = c(0, 1), inclusive = c(FALSE, TRUE),
+      trans = NULL, label = c(param_non_incl = "some label"), finalize = NULL)
+    Condition
+      Error:
+      ! `inclusive` must be `c(TRUE, TRUE)` when the `range` only covers two consecutive values.
+
 # bad args to range_validate
 
     Code
@@ -168,6 +186,37 @@
       Transformer: log-10 [1e-100, Inf]
       Range (transformed scale): [-10, -1]
       Values: 2
+
+---
+
+    Code
+      mtry_ish <- mtry()
+      mtry_ish$label <- NULL
+      print(mtry_ish)
+    Message
+      Quantitative Parameter
+      Range: [1, ?]
+
+---
+
+    Code
+      fun_ish <- weight_func()
+      fun_ish$label <- NULL
+      print(fun_ish)
+    Message
+      Qualitative Parameter
+      9 possible values include:
+      'rectangular', 'triangular', 'epanechnikov', 'biweight', 'triweight', 'cos',
+      'inv', 'gaussian', and 'rank'
+
+---
+
+    Code
+      signed_hash()
+    Message
+      Signed Hash Value (qualitative)
+      2 possible values include:
+      TRUE and FALSE
 
 # bad ranges
 

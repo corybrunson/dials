@@ -15,8 +15,7 @@
 #' `"audze_eglais"`, `"max_min_l1"`, `"max_min_l2"`, `"uniform"`,
 #' `"max_entropy"`, or `"latin_hypercube"`. A value of `"any"` will choose the
 #' first design available (in the order listed above, excluding
-#' `"latin_hypercube"`). If the design is extremely small, the function may
-#' change the type to `"latin_hypercube"` (with a warning).
+#' `"latin_hypercube"`). For a single-point design, a random grid is created.
 #' @param variogram_range A numeric value greater than zero. Larger values
 #'  reduce the likelihood of empty regions in the parameter space. Only used
 #'  for `type = "max_entropy"`.
@@ -58,30 +57,30 @@
 #'   library(ggplot2)
 #'
 #'   set.seed(383)
-#'   parameters(trees(), mixture()) %>%
-#'     grid_space_filling(size = 25, type = "latin_hypercube") %>%
+#'   parameters(trees(), mixture()) |>
+#'     grid_space_filling(size = 25, type = "latin_hypercube") |>
 #'     ggplot(aes(trees, mixture)) +
 #'     geom_point() +
 #'     lims(y = 0:1, x = c(1, 2000)) +
 #'     ggtitle("latin hypercube")
 #'
 #'   set.seed(383)
-#'   parameters(trees(), mixture()) %>%
-#'     grid_space_filling(size = 25, type = "max_entropy") %>%
+#'   parameters(trees(), mixture()) |>
+#'     grid_space_filling(size = 25, type = "max_entropy") |>
 #'     ggplot(aes(trees, mixture)) +
 #'     geom_point() +
 #'     lims(y = 0:1, x = c(1, 2000)) +
 #'     ggtitle("maximum entropy")
 #'
-#'   parameters(trees(), mixture()) %>%
-#'     grid_space_filling(size = 25, type = "audze_eglais") %>%
+#'   parameters(trees(), mixture()) |>
+#'     grid_space_filling(size = 25, type = "audze_eglais") |>
 #'     ggplot(aes(trees, mixture)) +
 #'     geom_point() +
 #'     lims(y = 0:1, x = c(1, 2000)) +
 #'     ggtitle("Audze-Eglais")
 #'
-#'   parameters(trees(), mixture()) %>%
-#'     grid_space_filling(size = 25, type = "uniform") %>%
+#'   parameters(trees(), mixture()) |>
+#'     grid_space_filling(size = 25, type = "uniform") |>
 #'     ggplot(aes(trees, mixture)) +
 #'     geom_point() +
 #'     lims(y = 0:1, x = c(1, 2000)) +
@@ -89,12 +88,20 @@
 #' }
 #'
 #' @export
-grid_space_filling <- function(x, ..., size = 5, type = "any", original = TRUE) {
+grid_space_filling <- function(
+  x,
+  ...,
+  size = 5,
+  type = "any",
+  original = TRUE
+) {
   dots <- list(...)
   if (any(names(dots) == "levels")) {
-    cli::cli_warn(c(
-      "{.arg levels} is not an argument to {.fn grid_space_filling}.",
-      i = "Did you mean {.arg size}?")
+    cli::cli_abort(
+      c(
+        "{.arg levels} is not an argument to {.fn grid_space_filling}.",
+        i = "Did you mean {.arg size}?"
+      )
     )
   }
   UseMethod("grid_space_filling")
@@ -102,13 +109,15 @@ grid_space_filling <- function(x, ..., size = 5, type = "any", original = TRUE) 
 
 #' @export
 #' @rdname grid_space_filling
-grid_space_filling.parameters <- function(x,
-                                          ...,
-                                          size = 5,
-                                          type = "any",
-                                          variogram_range = 0.5,
-                                          iter = 1000,
-                                          original = TRUE) {
+grid_space_filling.parameters <- function(
+  x,
+  ...,
+  size = 5,
+  type = "any",
+  variogram_range = 0.5,
+  iter = 1000,
+  original = TRUE
+) {
   # test for NA and finalized
   # test for empty ...
   params <- x$object
@@ -127,14 +136,15 @@ grid_space_filling.parameters <- function(x,
 
 #' @export
 #' @rdname grid_space_filling
-grid_space_filling.list <- function(x,
-                                    ...,
-                                    size = 5,
-                                    type = "any",
-                                    variogram_range = 0.5,
-                                    iter = 1000,
-                                    original = TRUE) {
-
+grid_space_filling.list <- function(
+  x,
+  ...,
+  size = 5,
+  type = "any",
+  variogram_range = 0.5,
+  iter = 1000,
+  original = TRUE
+) {
   y <- parameters(x)
   params <- y$object
   names(params) <- y$id
@@ -153,14 +163,15 @@ grid_space_filling.list <- function(x,
 
 #' @export
 #' @rdname grid_space_filling
-grid_space_filling.param <- function(x,
-                                     ...,
-                                     size = 5,
-                                     variogram_range = 0.5,
-                                     iter = 1000,
-                                     type = "any",
-                                     original = TRUE) {
-
+grid_space_filling.param <- function(
+  x,
+  ...,
+  size = 5,
+  variogram_range = 0.5,
+  iter = 1000,
+  type = "any",
+  original = TRUE
+) {
   y <- parameters(list(x, ...))
   params <- y$object
   names(params) <- y$id
@@ -176,36 +187,45 @@ grid_space_filling.param <- function(x,
   grd
 }
 
-sfd_types <-
-  c("any", "audze_eglais", "max_min_l1", "max_min_l2", "uniform",
-    "latin_hypercube", "max_entropy")
+sfd_types <- c(
+  "any",
+  "audze_eglais",
+  "max_min_l1",
+  "max_min_l2",
+  "uniform",
+  "latin_hypercube",
+  "max_entropy"
+)
 
-make_sfd <- function(...,
-                     size = 5,
-                     type = "any",
-                     variogram_range = 0.5,
-                     iter = 1000,
-                     original = TRUE,
-                     call = caller_env()) {
+make_sfd <- function(
+  ...,
+  size = 5,
+  type = "any",
+  variogram_range = 0.5,
+  iter = 1000,
+  original = TRUE,
+  call = caller_env()
+) {
   type <- rlang::arg_match(type, sfd_types)
   validate_params(..., call = call)
   param_quos <- quos(...)
   params <- map(param_quos, eval_tidy)
   p <- length(params)
 
-  if (size < p | size == 1) {
-    cli::cli_warn("Due to the small size of the grid, a Latin hypercube \\
-                  design will be used.")
-    type <- "latin_hypercube"
+  if (size == 1) {
+    res <- grid_random(params, size = size)
+    return(res)
   }
 
-  if (type %in% c("any", "audze_eglais", "max_min_l1", "max_min_l2", "uniform")) {
+  if (
+    type %in% c("any", "audze_eglais", "max_min_l1", "max_min_l2", "uniform")
+  ) {
     has_premade_design <- sfd::sfd_available(p, size, type)
 
     if (has_premade_design) {
       grid <- sfd::get_design(p, num_points = size, type = type)
-      vals <- purrr::map(params, ~ value_seq(.x, size))
-      vals <- purrr::map(vals, ~ base_recycle(.x, size))
+      vals <- purrr::map(params, \(.x) value_seq(.x, size))
+      vals <- purrr::map(vals, \(.x) base_recycle(.x, size))
       grid <- sfd::update_values(grid, vals)
       names(grid) <- names(params)
     } else {
@@ -236,7 +256,7 @@ make_sfd <- function(...,
       )
   }
 
-  new_param_grid(grid, call = call)
+  new_param_grid(grid)
 }
 
 base_recycle <- function(x, size) {
@@ -269,12 +289,14 @@ base_recycle <- function(x, size) {
 #'
 #' @keywords internal
 #' @export
-grid_max_entropy <- function(x,
-                             ...,
-                             size = 3,
-                             original = TRUE,
-                             variogram_range = 0.5,
-                             iter = 1000) {
+grid_max_entropy <- function(
+  x,
+  ...,
+  size = 3,
+  original = TRUE,
+  variogram_range = 0.5,
+  iter = 1000
+) {
   lifecycle::deprecate_soft(
     "1.3.0",
     "grid_max_entropy()",
@@ -283,9 +305,11 @@ grid_max_entropy <- function(x,
 
   dots <- list(...)
   if (any(names(dots) == "levels")) {
-    cli::cli_warn(c(
-      "{.arg levels} is not an argument to {.fn grid_max_entropy}.",
-      i = "Did you mean {.arg size}?")
+    cli::cli_abort(
+      c(
+        "{.arg levels} is not an argument to {.fn grid_max_entropy}.",
+        i = "Did you mean {.arg size}?"
+      )
     )
   }
   UseMethod("grid_max_entropy")
@@ -293,13 +317,14 @@ grid_max_entropy <- function(x,
 
 #' @export
 #' @rdname grid_max_entropy
-grid_max_entropy.parameters <- function(x,
-                                        ...,
-                                        size = 3,
-                                        original = TRUE,
-                                        variogram_range = 0.5,
-                                        iter = 1000) {
-
+grid_max_entropy.parameters <- function(
+  x,
+  ...,
+  size = 3,
+  original = TRUE,
+  variogram_range = 0.5,
+  iter = 1000
+) {
   # test for NA and finalized
   # test for empty ...
   params <- x$object
@@ -317,13 +342,14 @@ grid_max_entropy.parameters <- function(x,
 
 #' @export
 #' @rdname grid_max_entropy
-grid_max_entropy.list <- function(x,
-                                  ...,
-                                  size = 3,
-                                  original = TRUE,
-                                  variogram_range = 0.5,
-                                  iter = 1000) {
-
+grid_max_entropy.list <- function(
+  x,
+  ...,
+  size = 3,
+  original = TRUE,
+  variogram_range = 0.5,
+  iter = 1000
+) {
   y <- parameters(x)
   params <- y$object
   names(params) <- y$id
@@ -341,13 +367,14 @@ grid_max_entropy.list <- function(x,
 
 #' @export
 #' @rdname grid_max_entropy
-grid_max_entropy.param <- function(x,
-                                   ...,
-                                   size = 3,
-                                   original = TRUE,
-                                   variogram_range = 0.5,
-                                   iter = 1000) {
-
+grid_max_entropy.param <- function(
+  x,
+  ...,
+  size = 3,
+  original = TRUE,
+  variogram_range = 0.5,
+  iter = 1000
+) {
   y <- parameters(list(x, ...))
   params <- y$object
   names(params) <- y$id
@@ -362,13 +389,14 @@ grid_max_entropy.param <- function(x,
   new_param_grid(grd)
 }
 
-make_max_entropy_grid <- function(...,
-                                  size = 3,
-                                  original = TRUE,
-                                  variogram_range = 0.5,
-                                  iter = 1000,
-                                  call = caller_env()) {
-
+make_max_entropy_grid <- function(
+  ...,
+  size = 3,
+  original = TRUE,
+  variogram_range = 0.5,
+  iter = 1000,
+  call = caller_env()
+) {
   validate_params(..., call = call)
   param_quos <- quos(...)
   params <- map(param_quos, eval_tidy)
@@ -413,9 +441,11 @@ grid_latin_hypercube <- function(x, ..., size = 3, original = TRUE) {
 
   dots <- list(...)
   if (any(names(dots) == "levels")) {
-    cli::cli_warn(c(
-      "{.arg levels} is not an argument to {.fn grid_latin_hypercube}.",
-      i = "Did you mean {.arg size}?")
+    cli::cli_abort(
+      c(
+        "{.arg levels} is not an argument to {.fn grid_latin_hypercube}.",
+        i = "Did you mean {.arg size}?"
+      )
     )
   }
   UseMethod("grid_latin_hypercube")
@@ -455,7 +485,12 @@ grid_latin_hypercube.param <- function(x, ..., size = 3, original = TRUE) {
   new_param_grid(grd)
 }
 
-make_latin_hypercube_grid <- function(..., size = 3, original = TRUE, call = caller_env()) {
+make_latin_hypercube_grid <- function(
+  ...,
+  size = 3,
+  original = TRUE,
+  call = caller_env()
+) {
   validate_params(..., call = call)
   param_quos <- quos(...)
   params <- map(param_quos, eval_tidy)

@@ -28,28 +28,29 @@
 #' @examples
 #' library(dplyr)
 #'
-#' my_lambda <- penalty() %>%
+#' my_lambda <- penalty() |>
 #'   value_set(-4:-1)
 #'
 #' try(
 #'   range_validate(my_lambda, c(-10, NA)),
 #'   silent = TRUE
-#' ) %>%
+#' ) |>
 #'   print()
 #'
 #' range_get(my_lambda)
 #'
-#' my_lambda %>%
-#'   range_set(c(-10, 2)) %>%
+#' my_lambda |>
+#'   range_set(c(-10, 2)) |>
 #'   range_get()
 #'
 #' @export
-range_validate <- function(object,
-                           range,
-                           ukn_ok = TRUE,
-                           ...,
-                           call = caller_env()
-                           ) {
+range_validate <- function(
+  object,
+  range,
+  ukn_ok = TRUE,
+  ...,
+  call = caller_env()
+) {
   ukn_txt <- if (ukn_ok) {
     c(i = "{.code Inf} and {.code unknown()} are acceptable values.")
   } else {
@@ -58,7 +59,7 @@ range_validate <- function(object,
   if (length(range) != 2) {
     cli::cli_abort(
       c(
-        x = "{.arg range} must have two values: an upper and lower bound.", 
+        x = "{.arg range} must have two values: an upper and lower bound.",
         i = "{length(range)} value{?s} {?was/were} provided.",
         ukn_txt
       ),
@@ -85,13 +86,13 @@ range_validate <- function(object,
   } else {
     if (any(is_na[!is_unk])) {
       cli::cli_abort(
-        c(x = "Value ranges must be non-missing.", ukn_txt), 
+        c(x = "Value ranges must be non-missing.", ukn_txt),
         call = call
       )
     }
     if (any(!is_num[!is_unk])) {
       cli::cli_abort(
-        c("Value ranges must be numeric.", ukn_txt), 
+        c("Value ranges must be numeric.", ukn_txt),
         call = call
       )
     }
@@ -112,10 +113,11 @@ range_get <- function(object, original = TRUE) {
 
 #' @export
 #' @rdname range_validate
-range_set <- function(object, range) {
+range_set <- function(object, range, call = caller_env()) {
   if (length(range) != 2) {
     cli::cli_abort(
-      "{.arg range} should have two elements, not {length(range)}."
+      "{.arg range} should have two elements, not {length(range)}.",
+      call = call
     )
   }
   if (inherits(object, "quant_param")) {
@@ -130,8 +132,9 @@ range_set <- function(object, range) {
       )
   } else {
     cli::cli_abort(
-      "{.arg object} should be a {.cls quant_param} object, 
-      not {.obj_type_friendly {object}}."
+      "{.arg object} should be a {.cls quant_param} object,
+      not {.obj_type_friendly {object}}.",
+      call = call
     )
   }
   object

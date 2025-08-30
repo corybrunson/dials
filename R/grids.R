@@ -49,11 +49,11 @@
 grid_regular <- function(x, ..., levels = 3, original = TRUE, filter = NULL) {
   dots <- list(...)
   if (any(names(dots) == "size")) {
-    cli::cli_warn(
-     c(
-      "{.arg size} is not an argument to {.fn grid_regular}.",
-      i = "Did you mean {.arg levels}?"
-     )
+    cli::cli_abort(
+      c(
+        "{.arg size} is not an argument to {.fn grid_regular}.",
+        i = "Did you mean {.arg levels}?"
+      )
     )
   }
   UseMethod("grid_regular")
@@ -61,11 +61,13 @@ grid_regular <- function(x, ..., levels = 3, original = TRUE, filter = NULL) {
 
 #' @export
 #' @rdname grid_regular
-grid_regular.parameters <- function(x,
-                                    ...,
-                                    levels = 3,
-                                    original = TRUE,
-                                    filter = NULL) {
+grid_regular.parameters <- function(
+  x,
+  ...,
+  levels = 3,
+  original = TRUE,
+  filter = NULL
+) {
   # test for NA and finalized
   # test for empty ...
   params <- x$object
@@ -82,11 +84,13 @@ grid_regular.parameters <- function(x,
 
 #' @export
 #' @rdname grid_regular
-grid_regular.list <- function(x,
-                              ...,
-                              levels = 3,
-                              original = TRUE,
-                              filter = NULL) {
+grid_regular.list <- function(
+  x,
+  ...,
+  levels = 3,
+  original = TRUE,
+  filter = NULL
+) {
   y <- parameters(x)
   params <- y$object
   names(params) <- y$id
@@ -103,11 +107,13 @@ grid_regular.list <- function(x,
 
 #' @export
 #' @rdname grid_regular
-grid_regular.param <- function(x,
-                               ...,
-                               levels = 3,
-                               original = TRUE,
-                               filter = NULL) {
+grid_regular.param <- function(
+  x,
+  ...,
+  levels = 3,
+  original = TRUE,
+  filter = NULL
+) {
   y <- parameters(list(x, ...))
   params <- y$object
   names(params) <- y$id
@@ -121,11 +127,13 @@ grid_regular.param <- function(x,
   grd
 }
 
-make_regular_grid <- function(...,
-                              levels = 3,
-                              original = TRUE,
-                              filter = NULL,
-                              call = caller_env()) {
+make_regular_grid <- function(
+  ...,
+  levels = 3,
+  original = TRUE,
+  filter = NULL,
+  call = caller_env()
+) {
   validate_params(..., call = call)
   filter_quo <- enquo(filter)
   param_quos <- quos(...)
@@ -162,7 +170,7 @@ make_regular_grid <- function(...,
     parameters <- dplyr::filter(parameters, !!filter_quo)
   }
 
-  new_param_grid(parameters, call = call)
+  new_param_grid(parameters)
 }
 
 # ------------------------------------------------------------------------------
@@ -172,9 +180,11 @@ make_regular_grid <- function(...,
 grid_random <- function(x, ..., size = 5, original = TRUE, filter = NULL) {
   dots <- list(...)
   if (any(names(dots) == "levels")) {
-    cli::cli_warn(c(
-      "{.arg levels} is not an argument to {.fn grid_random}.",
-      i = "Did you mean {.arg size}?")
+    cli::cli_abort(
+      c(
+        "{.arg levels} is not an argument to {.fn grid_random}.",
+        i = "Did you mean {.arg size}?"
+      )
     )
   }
   UseMethod("grid_random")
@@ -182,11 +192,13 @@ grid_random <- function(x, ..., size = 5, original = TRUE, filter = NULL) {
 
 #' @export
 #' @rdname grid_regular
-grid_random.parameters <- function(x,
-                                   ...,
-                                   size = 5,
-                                   original = TRUE,
-                                   filter = NULL) {
+grid_random.parameters <- function(
+  x,
+  ...,
+  size = 5,
+  original = TRUE,
+  filter = NULL
+) {
   # test for NA and finalized
   # test for empty ...
   params <- x$object
@@ -220,7 +232,13 @@ grid_random.list <- function(x, ..., size = 5, original = TRUE, filter = NULL) {
 
 #' @export
 #' @rdname grid_regular
-grid_random.param <- function(x, ..., size = 5, original = TRUE, filter = NULL) {
+grid_random.param <- function(
+  x,
+  ...,
+  size = 5,
+  original = TRUE,
+  filter = NULL
+) {
   y <- parameters(list(x, ...))
   params <- y$object
   names(params) <- y$id
@@ -234,11 +252,13 @@ grid_random.param <- function(x, ..., size = 5, original = TRUE, filter = NULL) 
   grd
 }
 
-make_random_grid <- function(...,
-                             size = 5,
-                             original = TRUE,
-                             filter = NULL,
-                             call = caller_env()) {
+make_random_grid <- function(
+  ...,
+  size = 5,
+  original = TRUE,
+  filter = NULL,
+  call = caller_env()
+) {
   validate_params(..., call = call)
   filter_quo <- enquo(filter)
   param_quos <- quos(...)
@@ -252,12 +272,12 @@ make_random_grid <- function(...,
     parameters <- dplyr::filter(parameters, !!filter_quo)
   }
 
-  new_param_grid(parameters, call = call)
+  new_param_grid(parameters)
 }
 
 # ------------------------------------------------------------------------------
 
-new_param_grid <- function(x = new_data_frame(), call = caller_env()) {
+new_param_grid <- function(x = new_data_frame()) {
   if (!is.data.frame(x)) {
     cli::cli_abort(
       "{.arg x} must be a data frame to construct a new grid from."

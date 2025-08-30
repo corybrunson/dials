@@ -1,4 +1,3 @@
-
 test_that("to [0, 1] for qualitative values", {
   z <- prune_method()
 
@@ -7,6 +6,14 @@ test_that("to [0, 1] for qualitative values", {
 
   z_back <- encode_unit(z, rev(z_0), direction = "backward")
   expect_equal(z_back, rev(prune_method()$values))
+  expect_snapshot(
+    error = TRUE,
+    encode_unit(prune_method(), "don't prune", direction = "forward")
+  )
+  expect_snapshot(
+    error = TRUE,
+    encode_unit(prune_method(), 13, direction = "forward")
+  )
 })
 
 
@@ -17,7 +24,11 @@ test_that("to [0, 1] for quantitative values", {
   x_0 <- encode_unit(x, 2:7, direction = "forward")
   expect_equal(x_0, seq(0, 1, length = 6))
 
-  x_back <- encode_unit(x, c(0.000001, 1 / 3, .99999, 1), direction = "backward")
+  x_back <- encode_unit(
+    x,
+    c(0.000001, 1 / 3, .99999, 1),
+    direction = "backward"
+  )
   expect_equal(x_back, c(2L, 4L, 7L, 7L))
 
   y_0 <- encode_unit(y, log10(214), direction = "forward")
@@ -26,6 +37,10 @@ test_that("to [0, 1] for quantitative values", {
   y_trans <- encode_unit(y, y_0, direction = "backward", original = FALSE)
   expect_equal(y_orig, 214, tolerance = 0.01)
   expect_equal(y_trans, log10(214), tolerance = 0.01)
+  expect_snapshot(
+    error = TRUE,
+    encode_unit(penalty(), "penalty", direction = "forward")
+  )
 })
 
 
@@ -97,5 +112,9 @@ test_that("bad args", {
   expect_snapshot(
     error = TRUE,
     encode_unit(z, 1:2, direction = "backward")
+  )
+  expect_snapshot(
+    error = TRUE,
+    encode_unit(mtry(), 1:2, direction = "backward")
   )
 })

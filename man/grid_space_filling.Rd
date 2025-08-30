@@ -54,8 +54,7 @@ generated from this size, the smaller, unique set is returned.}
 \code{"audze_eglais"}, \code{"max_min_l1"}, \code{"max_min_l2"}, \code{"uniform"},
 \code{"max_entropy"}, or \code{"latin_hypercube"}. A value of \code{"any"} will choose the
 first design available (in the order listed above, excluding
-\code{"latin_hypercube"}). If the design is extremely small, the function may
-change the type to \code{"latin_hypercube"} (with a warning).}
+\code{"latin_hypercube"}). For a single-point design, a random grid is created.}
 
 \item{original}{A logical: should the parameters be in the original units or
 in the transformed space (if any)?}
@@ -125,13 +124,13 @@ library(tune)
 
 # When used with glmnet, the range is [0.05, 1.00]
 glmn_mod <-
-  linear_reg(mixture = tune()) \%>\%
+  linear_reg(mixture = tune()) |>
   set_engine("glmnet")
 
 set.seed(283)
 mix_grid_2 <-
-  glmn_mod \%>\% 
-  extract_parameter_set_dials() \%>\% 
+  glmn_mod |> 
+  extract_parameter_set_dials() |> 
   grid_latin_hypercube(size = 1000)
 range(mix_grid_2$mixture)
 }\if{html}{\out{</div>}}
@@ -158,30 +157,30 @@ if (rlang::is_installed("ggplot2")) {
   library(ggplot2)
 
   set.seed(383)
-  parameters(trees(), mixture()) \%>\%
-    grid_space_filling(size = 25, type = "latin_hypercube") \%>\%
+  parameters(trees(), mixture()) |>
+    grid_space_filling(size = 25, type = "latin_hypercube") |>
     ggplot(aes(trees, mixture)) +
     geom_point() +
     lims(y = 0:1, x = c(1, 2000)) +
     ggtitle("latin hypercube")
 
   set.seed(383)
-  parameters(trees(), mixture()) \%>\%
-    grid_space_filling(size = 25, type = "max_entropy") \%>\%
+  parameters(trees(), mixture()) |>
+    grid_space_filling(size = 25, type = "max_entropy") |>
     ggplot(aes(trees, mixture)) +
     geom_point() +
     lims(y = 0:1, x = c(1, 2000)) +
     ggtitle("maximum entropy")
 
-  parameters(trees(), mixture()) \%>\%
-    grid_space_filling(size = 25, type = "audze_eglais") \%>\%
+  parameters(trees(), mixture()) |>
+    grid_space_filling(size = 25, type = "audze_eglais") |>
     ggplot(aes(trees, mixture)) +
     geom_point() +
     lims(y = 0:1, x = c(1, 2000)) +
     ggtitle("Audze-Eglais")
 
-  parameters(trees(), mixture()) \%>\%
-    grid_space_filling(size = 25, type = "uniform") \%>\%
+  parameters(trees(), mixture()) |>
+    grid_space_filling(size = 25, type = "uniform") |>
     ggplot(aes(trees, mixture)) +
     geom_point() +
     lims(y = 0:1, x = c(1, 2000)) +

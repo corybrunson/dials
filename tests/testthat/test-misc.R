@@ -1,4 +1,3 @@
-
 test_that("formatting", {
   expect_equal(
     dials:::format_bounds(c(TRUE, TRUE)),
@@ -41,7 +40,10 @@ test_that("check_label()", {
 
 test_that("check_values_quant()", {
   expect_no_error(check_values_quant(NULL))
-  expect_snapshot(error = TRUE, check_values_quant("should have been a numeric"))
+  expect_snapshot(
+    error = TRUE,
+    check_values_quant("should have been a numeric")
+  )
   expect_snapshot(error = TRUE, check_values_quant(c(1, NA)))
   expect_snapshot(error = TRUE, check_values_quant(numeric()))
 })
@@ -52,4 +54,13 @@ test_that("check_inclusive()", {
   expect_snapshot(error = TRUE, check_inclusive(NULL))
   expect_snapshot(error = TRUE, check_inclusive(c(TRUE, NA)))
   expect_snapshot(error = TRUE, check_inclusive(1:2))
+})
+
+
+test_that("vctrs-helpers-parameters", {
+  expect_false(dials:::is_parameters(2))
+  expect_snapshot(
+    error = TRUE,
+    dials:::df_size(2)
+  )
 })

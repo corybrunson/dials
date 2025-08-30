@@ -1,7 +1,7 @@
 # parameters_const() input checks
 
     Code
-      parameters_constr(2)
+      parameters_constr(name = 2)
     Condition
       Error:
       ! `name` must be a character vector, not the number 2.
@@ -10,7 +10,7 @@
 
     Code
       ab <- c("a", "b")
-      parameters_constr(ab, c("a", "a"), ab, ab, ab)
+      parameters_constr(ab, id = c("a", "a"), ab, ab, ab)
     Condition
       Error:
       x Element id should have unique values.
@@ -20,10 +20,19 @@
 
     Code
       ab <- c("a", "b")
-      parameters_constr(ab, ab, ab, ab, ab, "not a params list")
+      parameters_constr(ab, ab, ab, ab, ab, object = "not a params list")
     Condition
       Error:
       ! `object` must be a list of <param> objects.
+
+---
+
+    Code
+      ab <- c("a", "b")
+      parameters_constr(ab, ab, ab, ab, ab, object = list(penalty(), "not a param"))
+    Condition
+      Error:
+      ! `object` elements in the following positions must be `NA` or a <param> object: 2.
 
 ---
 
@@ -119,7 +128,8 @@
 ---
 
     Code
-      ex_params[1, ] %>% structure(class = c("parameters", class(.)))
+      param <- ex_params[1, ]
+      structure(param, class = c("parameters", class(param)))
     Message
       Collection of 1 parameters for tuning
       
@@ -132,7 +142,8 @@
 ---
 
     Code
-      ex_params[1:2, ] %>% structure(class = c("parameters", class(.)))
+      param <- ex_params[1:2, ]
+      structure(param, class = c("parameters", class(param)))
     Message
       Collection of 2 parameters for tuning
       
@@ -146,7 +157,8 @@
 ---
 
     Code
-      ex_params[1:3, ] %>% structure(class = c("parameters", class(.)))
+      param <- ex_params[1:3, ]
+      structure(param, class = c("parameters", class(param)))
     Message
       Collection of 3 parameters for tuning
       
