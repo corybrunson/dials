@@ -21,7 +21,7 @@ values_ordinal_link
 The link function of an ordinal (generalized linear) regression model.
 }
 \details{
-This parameter is only used in ordinal regression models.
+This parameter is used in \code{parsnip::set_engine('polr')}.
 }
 \examples{
 values_ordinal_link
