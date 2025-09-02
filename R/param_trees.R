@@ -171,7 +171,7 @@ prune_func <- function(values = c("mr", "mc")) {
   new_qual_param(
     type = "character",
     values = values,
-    label = c(split_func = "Splitting function"),
+    label = c(prune_func = "Splitting function"),
     finalize = NULL
   )
 }
