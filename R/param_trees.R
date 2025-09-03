@@ -33,12 +33,6 @@
 #' * `prune()`: A logical for whether a tree or set of rules should be pruned.
 #'
 #' * `cost_complexity()`: The cost-complexity parameter in classical CART models.
-#'
-#' * `split_func()`: The cost function used for splitting,
-#'   corresponding to `split` in \pkg{rpartScore}.
-#'
-#' * `prune_func()`: The performance measure used for pruning,
-#'   corresponding to `prune` in \pkg{rpartScore}.
 #' @examples
 #' trees()
 #' min_n()
@@ -148,30 +142,6 @@ cost_complexity <- function(range = c(-10, -1), trans = transform_log10()) {
     inclusive = c(TRUE, TRUE),
     trans = trans,
     label = c(cost_complexity = "Cost-Complexity Parameter"),
-    finalize = NULL
-  )
-}
-
-# FIXME: If feasible, use full words in place of abbreviations below.
-
-#' @export
-#' @rdname trees
-split_func <- function(values = c("abs", "quad")) {
-  new_qual_param(
-    type = "character",
-    values = values,
-    label = c(split_func = "Splitting function"),
-    finalize = NULL
-  )
-}
-
-#' @export
-#' @rdname trees
-prune_func <- function(values = c("mr", "mc")) {
-  new_qual_param(
-    type = "character",
-    values = values,
-    label = c(prune_func = "Splitting function"),
     finalize = NULL
   )
 }
