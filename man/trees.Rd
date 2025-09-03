@@ -75,6 +75,4 @@ loss_reduction()
 tree_depth()
 prune()
 cost_complexity()
-split_func()
-prune_func()
 }

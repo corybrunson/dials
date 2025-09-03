@@ -41,8 +41,6 @@
 #' tree_depth()
 #' prune()
 #' cost_complexity()
-#' split_func()
-#' prune_func()
 #' @export
 trees <- function(range = c(1L, 2000L), trans = NULL) {
   new_quant_param(
