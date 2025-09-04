@@ -4,27 +4,45 @@
 \name{ordinal_link}
 \alias{ordinal_link}
 \alias{values_ordinal_link}
-\title{Ordinal Regression Link Function (character)}
+\alias{odds_link}
+\alias{values_odds_link}
+\title{Ordinal Regression Link Functions (character)}
 \format{
 An object of class \code{character} of length 5.
+
+An object of class \code{character} of length 4.
 }
 \usage{
 ordinal_link(values = values_ordinal_link)
 
 values_ordinal_link
+
+odds_link(values = values_odds_link)
+
+values_odds_link
 }
 \arguments{
-\item{values}{A character string of possible values. See
-\code{values_ordinal_link} in examples below.}
+\item{values}{For \verb{*_link()}, a character string from among the possible
+values encoded in \verb{values_*_link}. See the examples below.}
 }
 \description{
-The link function of an ordinal (generalized linear) regression model.
+The ordinal and odds link functions of an ordinal regression model.
 }
 \details{
-This parameter is used in \code{parsnip::set_engine('polr')}.
+These parameters are used by ordinal regression models specified by
+\code{ordinal_reg()}, for example \code{parsnip::set_engine('polr')}. The
+nomenclature is taken from Wurm &al (2021), who characterize the pair of
+functions as a composite link function.
 }
 \examples{
 values_ordinal_link
 ordinal_link()
+values_odds_link
+odds_link()
+}
+\references{
+Wurm, Michael J., Rathouz, Paul J., & Hanlon, Bret M. (2021).
+Regularized Ordinal Regression and the ordinalNet R Package. \emph{Journal of
+Statistical Software}, 99(6), 1–42. 10.18637/jss.v099.i06
 }
 \keyword{datasets}
