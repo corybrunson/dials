@@ -31,6 +31,7 @@ ordinal_link <- function(values = values_ordinal_link) {
 #' @rdname ordinal_link
 #' @export
 values_ordinal_link <- c(
+  # TODO: Combine and standardize options from all engines.
   "logistic",
   "probit",
   "loglog",
