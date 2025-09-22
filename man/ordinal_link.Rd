@@ -32,7 +32,8 @@ The ordinal and odds link functions of an ordinal regression model.
 These parameters are used by ordinal regression models specified by
 \code{ordinal_reg()}, for example \code{parsnip::set_engine('polr')}. The
 nomenclature is taken from Wurm &al (2021), who characterize the pair of
-functions as a composite link function.
+functions as a composite link function. Note that different engines support
+different subsets of link functions.
 }
 \examples{
 values_ordinal_link

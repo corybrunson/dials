@@ -8,7 +8,8 @@
 #' @details These parameters are used by ordinal regression models specified by
 #'   `ordinal_reg()`, for example `parsnip::set_engine('polr')`. The
 #'   nomenclature is taken from Wurm &al (2021), who characterize the pair of
-#'   functions as a composite link function.
+#'   functions as a composite link function. Note that different engines support
+#'   different subsets of link functions.
 #'
 #' @references Wurm, Michael J., Rathouz, Paul J., & Hanlon, Bret M. (2021).
 #'   Regularized Ordinal Regression and the ordinalNet R Package. _Journal of
@@ -31,7 +32,6 @@ ordinal_link <- function(values = values_ordinal_link) {
 #' @rdname ordinal_link
 #' @export
 values_ordinal_link <- c(
-  # TODO: Combine and standardize options from all engines.
   "logistic",
   "probit",
   "loglog",
