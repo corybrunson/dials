@@ -2,6 +2,12 @@
 
 ## dials (development version)
 
+## dials 1.4.3
+
+CRAN release: 2026-04-11
+
+### New parameters
+
 - [`ordinal_link()`](https://dials.tidymodels.org/dev/reference/ordinal_link.md)
   and
   [`odds_link()`](https://dials.tidymodels.org/dev/reference/ordinal_link.md)
@@ -9,17 +15,54 @@
   ([@corybrunson](https://github.com/corybrunson),
   [\#435](https://github.com/tidymodels/dials/issues/435)).
 
-- A bug was fixed where some space-filling designs did not respect the
-  `original` argument
-  ([\#409](https://github.com/tidymodels/dials/issues/409)).
-
-- Parameters were added for the `tab_pfn` model:
-  [`num_estimators()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md),
+- [`num_estimators()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md),
   [`softmax_temperature()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md),
   [`balance_probabilities()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md),
   [`average_before_softmax()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md),
   and
-  [`training_set_limit()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md).
+  [`training_set_limit()`](https://dials.tidymodels.org/dev/reference/tab-pfn-param.md)
+  are new parameters for the `tab_pfn()` model in parsnip
+  ([\#412](https://github.com/tidymodels/dials/issues/412)).
+
+### Other changes
+
+- [`grid_space_filling()`](https://dials.tidymodels.org/dev/reference/grid_space_filling.md)
+  now also respects the `original` argument when pre-made designs are
+  available ([\#409](https://github.com/tidymodels/dials/issues/409)).
+
+- [`parameters()`](https://dials.tidymodels.org/dev/reference/parameters.md)
+  and the `grid_*()` functions give more information in the error
+  message when non-parameter objects are passed in
+  ([\#437](https://github.com/tidymodels/dials/issues/437),
+  [\#438](https://github.com/tidymodels/dials/issues/438)).
+
+- [`encode_unit()`](https://dials.tidymodels.org/dev/reference/encode_unit.md)
+  now provides a helpful error when `x` is not a parameter object
+  ([\#430](https://github.com/tidymodels/dials/issues/430)).
+
+- [`value_validate()`](https://dials.tidymodels.org/dev/reference/value_validate.md),
+  [`value_transform()`](https://dials.tidymodels.org/dev/reference/value_validate.md),
+  [`value_inverse()`](https://dials.tidymodels.org/dev/reference/value_validate.md),
+  and
+  [`value_set()`](https://dials.tidymodels.org/dev/reference/value_validate.md)
+  now produce more informative error messages when values contain
+  unknowns ([\#445](https://github.com/tidymodels/dials/issues/445)).
+
+- [`value_validate()`](https://dials.tidymodels.org/dev/reference/value_validate.md),
+  [`encode_unit()`](https://dials.tidymodels.org/dev/reference/encode_unit.md),
+  [`get_p()`](https://dials.tidymodels.org/dev/reference/finalize.md),
+  [`get_log_p()`](https://dials.tidymodels.org/dev/reference/finalize.md),
+  [`get_n()`](https://dials.tidymodels.org/dev/reference/finalize.md),
+  [`get_n_frac()`](https://dials.tidymodels.org/dev/reference/finalize.md),
+  [`get_n_frac_range()`](https://dials.tidymodels.org/dev/reference/finalize.md),
+  and
+  [`get_batch_sizes()`](https://dials.tidymodels.org/dev/reference/get_batch_sizes.md)
+  now enforce empty dots
+  ([\#439](https://github.com/tidymodels/dials/issues/439)).
+
+- Several further type-checking error messages now include the actual
+  type of the input
+  ([\#423](https://github.com/tidymodels/dials/issues/423)).
 
 ## dials 1.4.2
 
@@ -62,7 +105,7 @@ CRAN release: 2025-07-29
 
 CRAN release: 2025-02-13
 
-- For space-filling designs for $p$ parameters, there is a higher
+- For space-filling designs for $`p`$ parameters, there is a higher
   likelihood of finding a space-filling design for `1 < size <= p`.
   Also, single-point designs now default to a random grid
   ([\#363](https://github.com/tidymodels/dials/issues/363)).
