@@ -26,6 +26,8 @@ Useful links:
 
 Authors:
 
+- Hannah Frick <hannah@posit.co>
+
 - Max Kuhn <max@posit.co>
 
 Other contributors:

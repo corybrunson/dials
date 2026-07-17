@@ -2,6 +2,47 @@
 
 ## dials (development version)
 
+## dials 1.4.4
+
+CRAN release: 2026-06-22
+
+- [`attention_type()`](https://dials.tidymodels.org/dev/reference/attention-param.md),
+  [`dropout_hidden()`](https://dials.tidymodels.org/dev/reference/dropout.md),
+  [`dropout_last()`](https://dials.tidymodels.org/dev/reference/dropout.md),
+  and
+  [`target_token()`](https://dials.tidymodels.org/dev/reference/attention-param.md)
+  are new parameters for the SAINT model in the brulee package
+  ([\#452](https://github.com/tidymodels/dials/issues/452)).
+
+- [`bottleneck_units()`](https://dials.tidymodels.org/dev/reference/resnet-param.md),
+  [`dropout_attn()`](https://dials.tidymodels.org/dev/reference/attention-param.md),
+  [`dropout_embedding()`](https://dials.tidymodels.org/dev/reference/dropout.md),
+  [`num_attn_blocks()`](https://dials.tidymodels.org/dev/reference/attention-param.md),
+  [`num_attn_feat()`](https://dials.tidymodels.org/dev/reference/attention-param.md),
+  [`num_attn_heads()`](https://dials.tidymodels.org/dev/reference/attention-param.md),
+  [`num_embedding()`](https://dials.tidymodels.org/dev/reference/dropout.md),
+  [`penalty_average()`](https://dials.tidymodels.org/dev/reference/rln-param.md),
+  [`penalty_type()`](https://dials.tidymodels.org/dev/reference/rln-param.md),
+  [`normalization()`](https://dials.tidymodels.org/dev/reference/attention-param.md),
+  [`resid_at()`](https://dials.tidymodels.org/dev/reference/resnet-param.md),
+  and
+  [`step_rate()`](https://dials.tidymodels.org/dev/reference/rln-param.md)
+  are new parameters for deep learning models in the tabular package
+  when fit with the brulee engine
+  ([\#452](https://github.com/tidymodels/dials/issues/452),
+  [\#461](https://github.com/tidymodels/dials/issues/461)).
+
+- [`l2_leaf_reg()`](https://dials.tidymodels.org/dev/reference/catboost_parameters.md)
+  and
+  [`max_leaves()`](https://dials.tidymodels.org/dev/reference/catboost_parameters.md)
+  are new parameter objects for tree-based models that use the
+  “catboost” engine in the bonsai package
+  ([\#453](https://github.com/tidymodels/dials/issues/453)).
+
+- [`splitting_rule()`](https://dials.tidymodels.org/dev/reference/ranger_parameters.md)
+  gains support for survival forests
+  ([\#456](https://github.com/tidymodels/dials/issues/456)).
+
 ## dials 1.4.3
 
 CRAN release: 2026-04-11

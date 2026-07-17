@@ -14,7 +14,7 @@ set_engine("ranger", ...).'><meta property="og:image" content="https://dials.tid
 
     <a class="navbar-brand me-2" href="../index.html">dials</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.4.3.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.4.4.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,17 +66,13 @@ engine. They correspond to tuning parameters that would be specified using
 <span></span>
 <span><span class="va">ranger_reg_rules</span></span>
 <span></span>
+<span><span class="va">ranger_survival_rules</span></span>
+<span></span>
 <span><span class="va">ranger_split_rules</span></span>
 <span></span>
 <span><span class="fu">num_random_splits</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">15L</span><span class="op">)</span>, trans <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An object of class <code>character</code> of length 3.</p>
-<p>An object of class <code>character</code> of length 4.</p>
-<p>An object of class <code>character</code> of length 7.</p>
-    </div>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
@@ -96,8 +92,9 @@ transformation, <code>NULL</code>.</p></dd>
 
 <dt id="arg-values">values<a class="anchor" aria-label="anchor" href="#arg-values"></a></dt>
 <dd><p>For <code>splitting_rule()</code>, a character string of possible values.
-See <code>ranger_split_rules</code>, <code>ranger_class_rules</code>, and <code>ranger_reg_rules</code> for
-appropriate values. For <code>regularize_depth()</code>, either <code>TRUE</code> or <code>FALSE</code>.</p></dd>
+See <code>ranger_split_rules</code>, <code>ranger_class_rules</code>, <code>ranger_reg_rules</code>, and
+<code>ranger_survival_rules</code> for appropriate values. For <code>regularize_depth()</code>,
+either <code>TRUE</code> or <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +127,7 @@ conditional on others. For example, <code>significance_threshold()</code>,
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
   </div></footer></body></html>
