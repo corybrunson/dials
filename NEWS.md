@@ -1,6 +1,6 @@
 # dials (development version)
 
-* `threshold_structure` and `parallel_reg()` are new parameter dials for the `ordinal_reg()` model in parsnip. They respectively control threshold constraints and whether the parallel regression assumption is relaxed (for all terms).
+* `threshold_structure()` and `parallel_reg()` are new parameter dials for the `ordinal_reg()` model. They respectively control threshold constraints and the parallel regression assumption (applied to all terms).
 
 # dials 1.4.4
 

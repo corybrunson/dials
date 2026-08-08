@@ -21,20 +21,9 @@ This parameter is used by ordinal regression models specified by
 \code{parsnip::ordinal_reg()}, for example \code{parsnip::set_engine("clm")}. It
 controls whether the regression coefficients are shared across all ordinal
 thresholds (e.g. proportional odds in logit-linked models) or allowed to
-vary (generalized ordered logit). The default is \code{NULL} (not set), which
-uses the engine default.
-
-In addition to logical values, formulas and lists are accepted:
-\itemize{
-\item \code{TRUE ~ x1 + x2}: predictors on the RHS are parallel; all others are
-non-parallel.
-\item \code{FALSE ~ x1 + x2}: predictors on the RHS are non-parallel; all others
-are parallel.
-\item \code{c(TRUE ~ x1, FALSE ~ x2)}: \code{x1} is parallel, \code{x2} is non-parallel;
-no other predictors may be present.
-}
-
-Formula and list forms are not tunable through this parameter object.
+vary (generalized ordered logit). \code{TRUE} makes all effects parallel,
+\code{FALSE} makes all effects nominal or category-specific. The default is
+\code{NULL}, which uses the engine default.
 }
 \examples{
 values_parallel_reg
