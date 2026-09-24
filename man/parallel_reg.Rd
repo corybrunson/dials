@@ -10,10 +10,10 @@ parallel_reg(values = values_parallel_reg)
 values_parallel_reg
 }
 \arguments{
-\item{values}{A logical value or \code{NULL}. See the examples below.}
+\item{values}{A vector of possible values (TRUE or FALSE).}
 }
 \description{
-Whether and how the parallel regression assumption is relaxed in an ordinal
+Whether the parallel regression assumption is relaxed in an ordinal
 regression model.
 }
 \details{

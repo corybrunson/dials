@@ -1,9 +1,9 @@
 #' Parallel Regression Specification (logical)
 #'
-#' Whether and how the parallel regression assumption is relaxed in an ordinal
+#' Whether the parallel regression assumption is relaxed in an ordinal
 #' regression model.
 #'
-#' @param values A logical value or `NULL`. See the examples below.
+#' @param values A vector of possible values (TRUE or FALSE).
 #'
 #' @details This parameter is used by ordinal regression models specified by
 #'   `parsnip::ordinal_reg()`, for example `parsnip::set_engine("clm")`. It

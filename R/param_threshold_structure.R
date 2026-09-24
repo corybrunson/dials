@@ -2,14 +2,22 @@
 #'
 #' The threshold structure for the cutpoints of an ordinal regression model.
 #'
-#' @param values A character string of possible values. See the examples below.
-#'
+#' @param values A character string of possible values. See
+#'   `values_threshold_structure` in examples below.
 #' @details This parameter is used by ordinal regression models specified by
 #'   `parsnip::ordinal_reg()`, for example `parsnip::set_engine("clm")`. It
-#'   controls how thresholds/cutpoints are constrained. The default is
-#'   `"flexible"` (no constraints). Other options include symmetric and
-#'   equidistant structures. Different engines support different subsets of
-#'   threshold structures.
+#'   controls how thresholds/cutpoints are constrained.
+#'
+#'   * `"flexible"` (default): No constraints.
+#'
+#'   * `"symmetric_median"`: Symmetry about the median threshold.
+#'
+#'   * `"symmetric_zero"`: Symmetry about zero.
+#'
+#'   * `"equidistant"`: Equal differences between consecutive thresholds.
+#'
+#'   See engine documentation for more detail and supported structures.
+
 #' @examples
 #' values_threshold_structure
 #' threshold_structure()

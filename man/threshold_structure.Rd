@@ -10,7 +10,8 @@ threshold_structure(values = values_threshold_structure)
 values_threshold_structure
 }
 \arguments{
-\item{values}{A character string of possible values. See the examples below.}
+\item{values}{A character string of possible values. See
+\code{values_threshold_structure} in examples below.}
 }
 \description{
 The threshold structure for the cutpoints of an ordinal regression model.
@@ -18,10 +19,15 @@ The threshold structure for the cutpoints of an ordinal regression model.
 \details{
 This parameter is used by ordinal regression models specified by
 \code{parsnip::ordinal_reg()}, for example \code{parsnip::set_engine("clm")}. It
-controls how thresholds/cutpoints are constrained. The default is
-\code{"flexible"} (no constraints). Other options include symmetric and
-equidistant structures. Different engines support different subsets of
-threshold structures.
+controls how thresholds/cutpoints are constrained.
+\itemize{
+\item \code{"flexible"} (default): No constraints.
+\item \code{"symmetric_median"}: Symmetry about the median threshold.
+\item \code{"symmetric_zero"}: Symmetry about zero.
+\item \code{"equidistant"}: Equal differences between consecutive thresholds.
+}
+
+See engine documentation for more detail and supported structures.
 }
 \examples{
 values_threshold_structure
