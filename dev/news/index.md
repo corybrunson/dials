@@ -2,6 +2,25 @@
 
 ## dials (development version)
 
+- [`parallel_reg()`](https://dials.tidymodels.org/dev/reference/parallel_reg.md)
+  and
+  [`threshold_structure()`](https://dials.tidymodels.org/dev/reference/threshold_structure.md)
+  are new parameters for the `ordinal_reg()` model. They respectively
+  control the parallel regression assumption (applied to all terms) and
+  threshold constraints ([@corybrunson](https://github.com/corybrunson),
+  [\#462](https://github.com/tidymodels/dials/issues/462)).
+
+- [`grow_policy()`](https://dials.tidymodels.org/dev/reference/catboost_parameters.md),
+  [`one_hot_max_size()`](https://dials.tidymodels.org/dev/reference/catboost_parameters.md),
+  and
+  [`score_randomness()`](https://dials.tidymodels.org/dev/reference/catboost_parameters.md)
+  are new parameter objects for tree-based models that use the
+  “catboost” engine in the bonsai package. The documentation for
+  catboost parameters now describes which parameters depend on the
+  values of others
+  ([\#465](https://github.com/tidymodels/dials/issues/465),
+  [\#466](https://github.com/tidymodels/dials/issues/466)).
+
 ## dials 1.4.4
 
 CRAN release: 2026-06-22
